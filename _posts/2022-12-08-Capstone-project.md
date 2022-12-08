@@ -1,73 +1,31 @@
 ---
 layout: post
-title: Pose Estimation
-author: [Richard Kuo]
+title: Capstone-project
+author: [mochi_pancake_elvisting]
 category: [Lecture]
 tags: [jekyll, ai]
 ---
 
-Pose Estimation includes Applications, Body Pose, Head Pose, Hand Pose , Object Pose.
+期末專題實作:四足機器狗之強化學習
 
 ---
-### Pose Estimation Applications
-* **[健身鏡](https://johnsonfitnesslive.com/?action=mirror_pro_intro)**<br/>
-![](https://johnsonfitnesslive.com/images/mirrorPro-parallax-bg2-img03.gif)
+## 四足機器狗之強化學習
 
-* **[AI健身教練](https://fc.bnext.com.tw/articles/view/1226)**<br>
-健身新創 Peloton 在這波居家健身浪潮下，以販售主力產品飛輪、跑步機搭配線上課程，並將健身教練打造成「網紅」，用心拍攝運動影片，成功創造粉絲經濟。<br>
-![](https://bnextmedia.s3.hicloud.net.tw/image/album/2021-03/img-1614856341-69773@600.jpg)
-
-* **[馬術治療](https://www.inside.com.tw/article/21711-aigo-interview-aifly)**<br>
-![](https://inside-assets1.inside.com.tw/2020/11/oz0fu9mal72kdptfhnq8v79sf67c57.png?w=730&fit=max&q=80)
-
-* **[Pose-controlled Lights](https://github.com/burningion/dab-and-tpose-controlled-lights)**<br>
-![](https://github.com/burningion/dab-and-tpose-controlled-lights/raw/master/images/dab-tpose.gif?raw=True)
-* **[跌倒偵測](https://www.chinatimes.com/realtimenews/20201203005307-260418?chdtv)**
-<table>
-  <tr>
-  <td><img src="https://images.chinatimes.com/newsphoto/2020-12-03/1024/20201203005495.jpg"></td>  
-  <td><img src="https://matching.org.tw/website/uploads_product/website_1/P0000100000044_4_123.jpg"></td>
-  </tr>
-</table>
-
-* **[產線SOP](https://www.inside.com.tw/article/21716-aigo-interview-beseye-alpha)**<br>
-以雅文塑膠來說，產線作業員的動作僅集中於上半身，以頭部、頸部、肩膀、手臂、手掌的動作為主。Beseye_alpha 針對需求，複製日本大型製造工廠 AI 模型開發的成功案例、及與客戶多次討論需求、實地作業工作站規劃、實際場域測試資料訓練，開發出一個「肢體律動分析」模型，有效達到降低運算量的目標。
-
-* **[其他應用](https://www.eastwestidea.net/index.php/%E6%9D%90%E6%96%99/item/376)**<br>
-
+### 系統簡介及功能說明
+1. **系統簡介**:
+2. **功能說明**:
 ---
-## Body Pose
-**Ref.** [A 2019 Guide to Huamn Pose Estimatioin](https://heartbeat.comet.ml/a-2019-guide-to-human-pose-estimation-c10b79b64b73#7c7f)<br>
-
-### BodyPix - Person Segmentation in the Browser
-**Code:** [tfjs-models/body-pix](https://github.com/tensorflow/tfjs-models/tree/master/body-pix)<br>
-`pip install tf_bodypix`
-[Live Demo](https://storage.googleapis.com/tfjs-models/demos/body-pix/index.html)
-
-![](https://github.com/tensorflow/tfjs-models/raw/master/body-pix/images/body-pix-2.0.gif)<br>
+### 系統方塊圖
+![]()<br>
+AI模型說明
 ---
-### OpenPose
-**Paper:** [arxiv.org/abs/1812.08008](https://arxiv.org/abs/1812.08008)<br>
-**Code:** [CMU-Perceptual-Computing-Lab/openpose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)<br>
-**Ref.** [A Guide to OpenPose in 2021](https://viso.ai/deep-learning/openpose/)<br>
-
-![](https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/.github/media/pose_face_hands.gif?raw=true)
-![](https://viso.ai/wp-content/uploads/2021/01/Keypoints-Detected-by-OpenPose-on-the-COCO-Dataset.jpg)
-![](https://media.arxiv-vanity.com/render-output/5509832/x2.png)
-<iframe width="960" height="540" src="https://www.youtube.com/embed/0XIm-NTnOYc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+### 製作步驟
+1. 建立資料集dataset
+2. 移植程式到kaggle
+3. kaggle訓練模型
+4. kaggle測試模型
 ---
-### PoseNet
-<font size="3">
-PoseNet is built to run on lightweight devices such as the browser or mobile device where as<br>
-OpenPose is much more accurate and meant to be ran on GPU powered systems. You can see the performance benchmarks below.<br>
-</font>
-**Paper:**  [arxiv.org/abs/1505.07427](https://arxiv.org/abs/1505.07427)<br>
-**Code:** [rwightman/posenet-pytorch](https://github.com/rwightman/posenet-pytorch)<br>
-
-![](https://debuggercafe.com/wp-content/uploads/2020/10/keypoint_exmp.jpg)
-![](https://www.researchgate.net/profile/Soroush-Seifi/publication/335989945/figure/fig2/AS:806499555233793@1569295886946/The-Posenet-architecture-Yellow-modules-are-shared-with-GoogleNet-while-green-modules.ppm)
-![](https://i1.wp.com/parleylabs.com/wp-content/uploads/2020/01/image-1.png?resize=1024%2C420&ssl=1)
+### 系統測試及成果展示
 
 ---
 ### Pose Recognition 
