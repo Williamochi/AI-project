@@ -195,13 +195,13 @@ class DRQN():
 class ExperienceReplay():
     def __init__(self, buffer_size):
         
-        # buffer for holding the transistion 
+        # 儲存轉移的緩衝
         self.buffer = []       
         
-        # size of the buffer
+        # 緩衝大小
         self.buffer_size = buffer_size
         
-    # we remove the old transistion if buffer size has reached it's limit. Think off the buffer as a queue when new
+    # 如果
     # one comes, old one goes off
     
     def appendToBuffer(self, memory_tuplet):
