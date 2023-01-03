@@ -27,59 +27,58 @@ tags: [jekyll, ai]
 ```
 class DRQN():
     def __init__(self, input_shape, num_actions, inital_learning_rate):
-        
-        # first, we initialize all the hyperparameters
+        # 初始化所有超參數
 
         self.tfcast_type = tf.float32
         
-        # shape of our input which would be (length, width, channels)
+        # 設定輸入外形為(length, width, channels)
         self.input_shape = input_shape  
         
-        # number of actions in the environment
+        # 環境中的動作數量
         self.num_actions = num_actions
         
-        # learning rate for the neural network
+        # 神經網路的學習率
         self.learning_rate = inital_learning_rate
                 
-        # now we will define the hyperparameters of the convolutional neural network 
+        # 定義卷積神經網路的超參數
 
-        # filter size
+        # 過濾器大小
         self.filter_size = 5
         
-        # number of filters
+        # 過濾器數量
         self.num_filters = [16, 32, 64]
         
-        # stride size
+        # 間隔大小
         self.stride = 2
         
-        # pool size
+        # 池大小
         self.poolsize = 2        
         
-        # shape of our convolutional layer
+        # 設定卷積層形狀
         self.convolution_shape = get_input_shape(input_shape[0], self.filter_size, self.stride) * get_input_shape(input_shape[1], self.filter_size, self.stride) * self.num_filters[2]
         
-        # now we define the hyperparameters of our recurrent neural network and the final feed forward layer
+        # 定義循環神經網路與最終前饋層的超參數
         
-        # number of neurons 
+        # 神經元數量
         self.cell_size = 100
         
-        # number of hidden layers
+        # 隱藏層數量
         self.hidden_layer = 50
         
-        # drop out probability
+        # drop out 機率
         self.dropout_probability = [0.3, 0.2]
 
-        # hyperparameters for optimization
+        # 最佳化的超參數
         self.loss_decay_rate = 0.96
         self.loss_decay_steps = 180
 
         
-        # initialize all the variables for the CNN
+        # 初始化CNN的所有變數
 
-        # we initialize the placeholder for input whose shape would be (length, width, channel)
+        # 初始化輸入的佔位，形狀為(length, width, channel)
         self.input = tf.compat.v1.placeholder(shape = (self.input_shape[0], self.input_shape[1], self.input_shape[2]), dtype = self.tfcast_type)
         
-        # we will also initialize the shape of the target vector whose shape is equal to the number of actions
+        # 初始化目標向量的形狀，正好等於動作向量
         self.target_vector = tf.compat.v1.placeholder(shape = (self.num_actions, 1), dtype = self.tfcast_type)
 
         # initialize feature maps for our corresponding 3 filters
