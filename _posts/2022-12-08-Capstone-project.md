@@ -278,10 +278,8 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
     game.add_available_button(viz.Button.MOVE_BACKWARD)
     game.add_available_button(viz.Button.ATTACK)
     
-   
     # 加入一個名為 delta 的按鈕
     # 上述按鈕作用類似鍵盤，所以只會回傳布林值
-
     # 使用 delta 按鈕來模擬滑鼠來回傳正負數，有助於探索環境
     
     game.add_available_button(viz.Button.TURN_LEFT_RIGHT_DELTA, 90)
@@ -294,7 +292,6 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
         i[count] = 1
         count += 1
     actions = actions.astype(int).tolist()
-
 
     # 遊戲變數，裝甲、生命值與殺敵數
     game.add_available_game_variable(viz.GameVariable.AMMO0)
@@ -332,7 +329,6 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
     # 儲存模型
     saver = tf.compat.v1.train.Saver({v.name: v for v in actionDRQN.parameters}, max_to_keep = 1)
 
-    
     # 開始訓練過程
     # 初始化由經驗緩衝中取樣與儲存轉移的變數
     sample = 5
@@ -341,68 +337,68 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
     # 開始 tensorflow 階段
     with tf.compat.v1.Session() as sess:
         
-        # initialize all tensorflow variables
+        # 初始化所有 tensorflow 變數
         
         sess.run(tf.global_variables_initializer())
         
         for episode in range(num_episodes):
             
-            # start the new episode
+            # 開始新世代
             game.new_episode()
             
-            # play the episode till it reaches the episode length
+            # 在世代中進行遊戲直到世代結束
             for frame in range(episode_length):
                 
-                # get the game state
+                # 取得遊戲狀態
                 state = game.get_state()
                 s = state.screen_buffer
                 
-                # select the action
+                # 選擇動作
                 a = actionDRQN.prediction.eval(feed_dict = {actionDRQN.input: s})[0]
                 action = actions[a]
                 
-                # perform the action and store the reward
+                # 執行動作與儲存獎勵
                 reward = game.make_action(action)
                 
-                # update total rewad
+                # 更新總獎勵
                 total_reward += reward
 
                
-                # if the episode is over then break
+                # 如過世代結束則中斷迴圈
                 if game.is_episode_finished():
                     break
                  
-                # store transistion to our experience buffer
+                # 將轉移儲存到經驗緩衝中
                 if (frame % store) == 0:
                     experiences.appendToBuffer((s, action, reward))
 
-                # sample experience form the experience buffer        
+                # 從經驗緩衝中取樣經驗       
                 if (frame % sample) == 0:
                     memory = experiences.sample(1)
                     mem_frame = memory[0][0]
                     mem_reward = memory[0][2]
                     
                     
-                    # now, train the network
+                    # 開始訓練網路
                     Q1 = actionDRQN.output.eval(feed_dict = {actionDRQN.input: mem_frame})
                     Q2 = targetDRQN.output.eval(feed_dict = {targetDRQN.input: mem_frame})
 
-                    # set learning rate
+                    # 設定學習率
                     learning_rate = actionDRQN.learning_rate.eval()
 
-                    # calculate Q value
+                    # 計算Q值
                     Qtarget = old_q_value + learning_rate * (mem_reward + discount_factor * Q2 - old_q_value)    
                     
-                    # update old Q value
+                    # 更新舊的Q值
                     old_q_value = Qtarget
 
-                    # compute Loss
+                    # 計算損失
                     loss = actionDRQN.loss.eval(feed_dict = {actionDRQN.target_vector: Qtarget, actionDRQN.input: mem_frame})
                     
-                    # update total loss
+                    # 更新總損失
                     total_loss += loss
 
-                    # update both networks
+                    # 更新兩個網路
                     actionDRQN.update.run(feed_dict = {actionDRQN.target_vector: Qtarget, actionDRQN.input: mem_frame})
                     targetDRQN.update.run(feed_dict = {targetDRQN.target_vector: Qtarget, targetDRQN.input: mem_frame})
 
