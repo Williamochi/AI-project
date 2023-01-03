@@ -24,7 +24,7 @@ tags: [jekyll, ai]
 ### 系統方塊圖
 
 演算法模型說明  
-
+```
 class DRQN():
     def __init__(self, input_shape, num_actions, inital_learning_rate):
         
@@ -191,6 +191,7 @@ class DRQN():
         self.parameters = (self.features1, self.features2, self.features3,
                            self.rW, self.rU, self.rV, self.rb, self.rc,
                            self.fW, self.fb)
+```
 ---
 ### 製作步驟
 1. 建立資料集dataset
