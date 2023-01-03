@@ -191,6 +191,36 @@ class DRQN():
                            self.rW, self.rU, self.rV, self.rb, self.rc,
                            self.fW, self.fb)
 ```
+```
+class ExperienceReplay():
+    def __init__(self, buffer_size):
+        
+        # buffer for holding the transistion 
+        self.buffer = []       
+        
+        # size of the buffer
+        self.buffer_size = buffer_size
+        
+    # we remove the old transistion if buffer size has reached it's limit. Think off the buffer as a queue when new
+    # one comes, old one goes off
+    
+    def appendToBuffer(self, memory_tuplet):
+        if len(self.buffer) > self.buffer_size: 
+            for i in range(len(self.buffer) - self.buffer_size):
+                self.buffer.remove(self.buffer[0])     
+        self.buffer.append(memory_tuplet)  
+        
+        
+    # define a function called sample for sampling some random n number of transistions   
+    
+    def sample(self, n):
+        memories = []
+        
+        for i in range(n):
+            memory_index = np.random.randint(0, len(self.buffer))       
+            memories.append(self.buffer[memory_index])
+        return memories
+```
 ---
 ### 製作步驟
 1. 建立資料集dataset
