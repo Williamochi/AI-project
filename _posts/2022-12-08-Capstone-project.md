@@ -23,7 +23,8 @@ tags: [jekyll, ai]
 ---
 ### 系統方塊圖
 
-演算法模型說明  
+### 演算法模型說明 
+DRQN演算法
 ```
 class DRQN():
     def __init__(self, input_shape, num_actions, inital_learning_rate):
@@ -193,6 +194,7 @@ class DRQN():
                            self.rW, self.rU, self.rV, self.rb, self.rc,
                            self.fW, self.fb)
 ```
+定義ExperienceReplay類別來實作經驗回放緩衝，取樣經驗來訓練網路:
 ```
 class ExperienceReplay():
     def __init__(self, buffer_size):
@@ -222,6 +224,7 @@ class ExperienceReplay():
             memories.append(self.buffer[memory_index])
         return memories
 ```
+定義用於訓練網路的train函式
 ```
 def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cfg", map_path = 'map02', render = False):
   
