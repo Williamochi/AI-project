@@ -55,7 +55,8 @@ class DRQN():
         self.poolsize = 2        
         
         # 設定卷積層形狀
-        self.convolution_shape = get_input_shape(input_shape[0], self.filter_size, self.stride)  * get_input_shape(input_shape[1], self.filter_size, self.stride) * self.num_filters[2]
+        self.convolution_shape = 
+        get_input_shape(input_shape[0], self.filter_size, self.stride) * get_input_shape(input_shape[1], self.filter_size, self.stride) * self.num_filters[2]
         
         # 定義循環神經網路與最終前饋層的超參數
         
