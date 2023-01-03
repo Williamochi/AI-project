@@ -74,7 +74,6 @@ class DRQN():
         self.loss_decay_rate = 0.96
         self.loss_decay_steps = 180
 
-        
         # 初始化CNN的所有變數
 
         # 初始化輸入的佔位，形狀為(length, width, channel)
@@ -93,10 +92,8 @@ class DRQN():
         
         self.features3 = tf.Variable(initial_value = np.random.rand(self.filter_size, self.filter_size, self.num_filters[1], self.num_filters[2]),
                                      dtype = self.tfcast_type)
-
         # 初始化RNN變數
         # 討論RNN的運作方式
-        
         self.h = tf.Variable(initial_value = np.zeros((1, self.cell_size)), dtype = self.tfcast_type)
         
         # 隱藏層對隱藏層的權重矩陣
@@ -113,8 +110,7 @@ class DRQN():
                                             size = (self.cell_size, self.cell_size)),
                               dtype = self.tfcast_type)
         
-        # hiddent to output weight matrix
-                          
+        # 隱藏層對輸出層的權重矩陣
         self.rV = tf.Variable(initial_value = np.random.uniform(
                                             low = -np.sqrt(6. / (2 * self.cell_size)),
                                             high = np.sqrt(6. / (2 * self.cell_size)),
@@ -124,7 +120,6 @@ class DRQN():
         self.rb = tf.Variable(initial_value = np.zeros(self.cell_size), dtype = self.tfcast_type)
         self.rc = tf.Variable(initial_value = np.zeros(self.cell_size), dtype = self.tfcast_type)
 
-        
         # 定義前饋網路的權重與偏差
         
         # 權重
@@ -132,8 +127,7 @@ class DRQN():
                                             low = -np.sqrt(6. / (self.cell_size + self.num_actions)),
                                             high = np.sqrt(6. / (self.cell_size + self.num_actions)),
                                             size = (self.cell_size, self.num_actions)),
-                              dtype = self.tfcast_type)
-                             
+                              dtype = self.tfcast_type)              
         # 偏差
         self.fb = tf.Variable(initial_value = np.zeros(self.num_actions), dtype = self.tfcast_type)
 
@@ -144,8 +138,6 @@ class DRQN():
                                                    self.loss_decay_steps,
                                                    self.loss_decay_steps,
                                                    staircase = False)
-        
-        
         # 建置網路
 
         # 第一卷積層
@@ -167,7 +159,6 @@ class DRQN():
         # 加入 dropout 並重新設定輸入外形
         self.drop1 = tf.nn.dropout(self.pool3, self.dropout_probability[0])
         self.reshaped_input = tf.reshape(self.drop1, shape = [1, -1])
-
 
         # 建置循環神經網路，會以卷積網路的最後一層作為輸入
         self.h = tf.tanh(tf.matmul(self.reshaped_input, self.rW) + tf.matmul(self.h, self.rU) + self.rb)
@@ -213,7 +204,6 @@ class ExperienceReplay():
             for i in range(len(self.buffer) - self.buffer_size):
                 self.buffer.remove(self.buffer[0])     
         self.buffer.append(memory_tuplet)  
-        
         
     # 定義 sample 函式來隨機取樣n個轉移  
     
@@ -368,7 +358,6 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
                 # 更新總獎勵
                 total_reward += reward
 
-               
                 # 如過世代結束則中斷迴圈
                 if game.is_episode_finished():
                     break
@@ -382,7 +371,6 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
                     memory = experiences.sample(1)
                     mem_frame = memory[0][0]
                     mem_reward = memory[0][2]
-                    
                     
                     # 開始訓練網路
                     Q1 = actionDRQN.output.eval(feed_dict = {actionDRQN.input: mem_frame})
@@ -419,10 +407,10 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
 ```
 ---
 ### 製作步驟
-1. 建立資料集dataset
-2. 移植程式到kaggle
-3. kaggle訓練模型
-4. kaggle測試模型
+1. 獎勵機制以及懲罰機制
+2. 最後輸出的成果
+3. 
+4. 
 ---
 ### 系統測試及成果展示
 
