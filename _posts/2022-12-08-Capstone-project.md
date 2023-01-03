@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Capstone-project
+title: 運用DRQN及C15訓練遊戲之強化學習
 author: [mochi_pancake_elvisting]
 category: [Lecture]
 tags: [jekyll, ai]
