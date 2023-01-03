@@ -24,6 +24,7 @@ tags: [jekyll, ai]
 ### 系統方塊圖
 
 演算法模型說明  
+
 class DRQN():
     def __init__(self, input_shape, num_actions, inital_learning_rate):
         
