@@ -147,7 +147,8 @@ class DRQN():
         # 建置網路
 
         # 第一卷積層
-        self.conv1 = tf.nn.conv2d(input = tf.reshape(self.input, shape = (1, self.input_shape[0], self.input_shape[1], self.input_shape[2])), filter = self.features1, strides = [1, self.stride, self.stride, 1], padding = "VALID")
+        self.conv1 = tf.nn.conv2d(input = tf.reshape(self.input, shape = (1, self.input_shape[0], self.input_shape[1], self.input_shape[2])), 
+        filter = self.features1, strides = [1, self.stride, self.stride, 1], padding = "VALID")
         self.relu1 = tf.nn.relu(self.conv1)
         self.pool1 = tf.nn.max_pool2d(self.relu1, ksize = [1, self.poolsize, self.poolsize, 1], strides = [1, self.stride, self.stride, 1], padding = "SAME")
 
