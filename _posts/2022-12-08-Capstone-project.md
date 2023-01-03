@@ -201,8 +201,8 @@ class ExperienceReplay():
         # 緩衝大小
         self.buffer_size = buffer_size
         
-    # 如果
-    # one comes, old one goes off
+    # 如果緩衝滿了就移除舊的轉移
+    # 可把緩衝視佇列，新的進來時，舊的就出去
     
     def appendToBuffer(self, memory_tuplet):
         if len(self.buffer) > self.buffer_size: 
@@ -211,11 +211,10 @@ class ExperienceReplay():
         self.buffer.append(memory_tuplet)  
         
         
-    # define a function called sample for sampling some random n number of transistions   
+    # 定義 sample 函式來隨機取樣n個轉移  
     
     def sample(self, n):
         memories = []
-        
         for i in range(n):
             memory_index = np.random.randint(0, len(self.buffer))       
             memories.append(self.buffer[memory_index])
