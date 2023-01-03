@@ -223,41 +223,41 @@ class ExperienceReplay():
 ```
 def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cfg", map_path = 'map02', render = False):
   
-    # discount parameter for Q-value computation
+    # 計算Q值的折扣因子
     discount_factor = .99
     
-    # frequency for updating the experience in the buffer
+    # 更新緩衝中經驗的頻率
     update_frequency = 5
     store_frequency = 50
     
-    # for printing the output
+    # 顯示輸出結果
     print_frequency = 1000
 
-    # initialize variables for storing total rewards and total loss
+    # 初始化儲存總獎勵及總損失的變數
     total_reward = 0
     total_loss = 0
     old_q_value = 0
 
-    # initialize lists for storing the episodic rewards and losses 
+    # 初始化儲存世代獎勵的清單
     rewards = []
     losses = []
 
-    # okay, now let us get to the action!
+    # 動作表現
    
-    # first, we initialize our doomgame environment
+    # 初始化遊戲環境
     game = viz.DoomGame()
     
-    # specify the path where our scenario file is located
+    # 指定情境檔案路徑
     game.set_doom_scenario_path(scenario)
     
-    # specify the path of map file
+    # 指定地圖檔案路徑
     game.set_doom_map(map_path)
 
-    # then we set screen resolution and screen format
+    # 設定螢幕解析度與格式
     game.set_screen_resolution(viz.ScreenResolution.RES_256X160)    
     game.set_screen_format(viz.ScreenFormat.RGB24)
 
-    # we can add particles and effetcs we needed by simply setting them to true or false
+    # 設定以下參數為 true or false 來加入粒子與效果
     game.set_render_hud(False)
     game.set_render_minimal_hud(False)
     game.set_render_crosshair(False)
@@ -269,7 +269,7 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
     game.set_render_corpses(False)
     game.set_render_screen_flashes(True)
 
-    # now we will specify buttons that should be available to the agent
+    # 指定代理可用的按鈕
     game.add_available_button(viz.Button.MOVE_LEFT)
     game.add_available_button(viz.Button.MOVE_RIGHT)
     game.add_available_button(viz.Button.TURN_LEFT)
@@ -279,16 +279,15 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
     game.add_available_button(viz.Button.ATTACK)
     
    
-    # okay,now we will add one more button called delta. The above button will only work 
-    # like a keyboard keys and will have only boolean values. 
+    # 加入一個名為 delta 的按鈕
+    # 上述按鈕作用類似鍵盤，所以只會回傳布林值
 
-    # so we use delta button which emulates a mouse device which will have positive and negative values
-    # and it will be useful in environment for exploring
+    # 使用 delta 按鈕來模擬滑鼠來回傳正負數，有助於探索環境
     
     game.add_available_button(viz.Button.TURN_LEFT_RIGHT_DELTA, 90)
     game.add_available_button(viz.Button.LOOK_UP_DOWN_DELTA, 90)
 
-    # initialize an array for actions
+    # 初始化動作陣列
     actions = np.zeros((game.get_available_buttons_size(), game.get_available_buttons_size()))
     count = 0
     for i in actions:
@@ -297,51 +296,49 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
     actions = actions.astype(int).tolist()
 
 
-    # then we add the game variables, ammo, health, and killcount
+    # 遊戲變數，裝甲、生命值與殺敵數
     game.add_available_game_variable(viz.GameVariable.AMMO0)
     game.add_available_game_variable(viz.GameVariable.HEALTH)
     game.add_available_game_variable(viz.GameVariable.KILLCOUNT)
 
-    # we set episode_timeout to terminate the episode after some time step
-    # we also set episode_start_time which is useful for skipping intial events
+    # 設定 episode_timeout 在數個時間步驟後停止該世代
+    # 另外設定 episode_start_time，有助於跳過初始事件
     
     game.set_episode_timeout(6 * episode_length)
     game.set_episode_start_time(10)
     game.set_window_visible(render)
     
-    # we can also enable sound by setting set_sound_enable to true
+    # 設定 set_sound_enable 啟動或關閉音效
     game.set_sound_enabled(False)
 
-    # we set living reward to 0 which the agent for each move it does even though the move is not useful
+    # 設定生存獎勵為0，即使動作沒有實際作用，代理還是可以每走一步就收到獎勵
     game.set_living_reward(0)
 
-    # doom has different modes such as player, spectator, asynchronous player and asynchronous spectator
-    
-    # in spectator mode humans will play and agent will learn from it.
-    # in player mode, agent actually plays the game, so we use player mode.
-    
+    # doom 有多種模式，像是 玩家(player), 旁觀者(spectator), 非同步玩家(asynchronous player) and 非同步旁觀者(asynchronous spectator)
+    # 在旁觀者模式，人類來玩遊戲，代理從中學習
+    # 在玩家模式，代理會實際玩遊戲，因此設定為玩家模式
     game.set_mode(viz.Mode.PLAYER)
 
-    # okay, So now we, initialize the game environment
+    # 初始化遊戲環境
     game.init()
 
-    # now, let us create instance to our DRQN class and create our both actor and target DRQN networks
+    # 建立一個DRQN類別的實例，以及actor與目標DRQN網路
     actionDRQN = DRQN((160, 256, 3), game.get_available_buttons_size() - 2, learning_rate)
     targetDRQN = DRQN((160, 256, 3), game.get_available_buttons_size() - 2, learning_rate)
     
-    # we will also create instance to the ExperienceReplay class with the buffer size of 1000
+    # 建立一個 ExperienceReplay 類別的實例class，緩衝大小為 1000
     experiences = ExperienceReplay(1000)
 
-    # for storing the models
+    # 儲存模型
     saver = tf.compat.v1.train.Saver({v.name: v for v in actionDRQN.parameters}, max_to_keep = 1)
 
     
-    # now let us start the training process
-    # we initialize variables for sampling and storing transistions from the experience buffer
+    # 開始訓練過程
+    # 初始化由經驗緩衝中取樣與儲存轉移的變數
     sample = 5
     store = 50
    
-    # start the tensorflow session
+    # 開始 tensorflow 階段
     with tf.compat.v1.Session() as sess:
         
         # initialize all tensorflow variables
