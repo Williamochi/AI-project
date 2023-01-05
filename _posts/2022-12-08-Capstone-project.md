@@ -251,7 +251,7 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
     game.set_screen_format(viz.ScreenFormat.RGB24)
 
     # 設定以下參數為 true or false 來加入粒子與效果
-    game.set_render_hud(False)
+    game.set_render_hud(True)
     game.set_render_minimal_hud(False)
     game.set_render_crosshair(False)
     game.set_render_weapon(True)
@@ -263,12 +263,12 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
     game.set_render_screen_flashes(True)
 
     # 指定代理可用的按鈕
+    # game.add_available_button(viz.Button.TURN_LEFT)
+    # game.add_available_button(viz.Button.TURN_RIGHT)
+    # game.add_available_button(viz.Button.MOVE_FORWARD)
+    # game.add_available_button(viz.Button.MOVE_BACKWARD)
     game.add_available_button(viz.Button.MOVE_LEFT)
     game.add_available_button(viz.Button.MOVE_RIGHT)
-    game.add_available_button(viz.Button.TURN_LEFT)
-    game.add_available_button(viz.Button.TURN_RIGHT)
-    game.add_available_button(viz.Button.MOVE_FORWARD)
-    game.add_available_button(viz.Button.MOVE_BACKWARD)
     game.add_available_button(viz.Button.ATTACK)
     
     # 加入一個名為 delta 的按鈕
@@ -286,7 +286,7 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
         count += 1
     actions = actions.astype(int).tolist()
 
-    # 遊戲變數，裝甲、生命值與殺敵數
+    # 遊戲變數，彈藥、生命值與殺敵數
     game.add_available_game_variable(viz.GameVariable.AMMO0)
     game.add_available_game_variable(viz.GameVariable.HEALTH)
     game.add_available_game_variable(viz.GameVariable.KILLCOUNT)
@@ -295,14 +295,14 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
     # 另外設定 episode_start_time，有助於跳過初始事件
     
     game.set_episode_timeout(6 * episode_length)
-    game.set_episode_start_time(10)
+    game.set_episode_start_time(14)
     game.set_window_visible(render)
     
     # 設定 set_sound_enable 啟動或關閉音效
     game.set_sound_enabled(False)
 
-    # 設定生存獎勵為0，即使動作沒有實際作用，代理還是可以每走一步就收到獎勵
-    game.set_living_reward(0)
+    # 設定生存獎勵為-1，動作假如無實際作用，則利用扣分迫使代理轉換動作
+    game.set_living_reward(-1)
 
     # doom 有多種模式，像是 玩家(player), 旁觀者(spectator), 非同步玩家(asynchronous player) and 非同步旁觀者(asynchronous spectator)
     # 在旁觀者模式，人類來玩遊戲，代理從中學習
@@ -324,8 +324,15 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
 
     # 開始訓練過程
     # 初始化由經驗緩衝中取樣與儲存轉移的變數
-    sample = 5
+    sample = 4
     store = 50
+
+    # 設定 tensorboadX 與 想要觀察的變數 
+    writer = SummaryWriter(log_dir = 'runs/' + scenario)
+    kill_count = np.zeros(10) # This list will contain kill counts of each 10 episodes in order to compute moving average
+    ammo = np.zeros(10) # This list will contain ammo of each 10 episodes in order to compute moving average
+    rewards2 = np.zeros(10)
+    losses2 = np.zeros(10)
    
     # 開始 tensorflow 階段
     with tf.compat.v1.Session() as sess:
@@ -358,6 +365,19 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
 
                 # 如過世代結束則中斷迴圈
                 if game.is_episode_finished():
+                    
+                    # tensordroad紀錄輸出
+                    kill_count[episode%10] = game.get_game_variable(viz.GameVariable.KILLCOUNT)
+                    ammo[episode%10] = game.get_game_variable(viz.GameVariable.AMMO2)
+                    rewards2[episode%10] = total_reward
+                    losses2[episode%10] = total_loss
+                    # 更新 tensordroad writer
+                    if (episode > 0) and (episode%10 == 0):
+                        writer.add_scalar('Game variables/Kills', kill_count.mean(), episode)
+                        writer.add_scalar('Game variables/Ammo', ammo.mean(), episode)
+                        writer.add_scalar('Reward Loss/Reward', rewards2.mean(), episode)
+                        writer.add_scalar('Reward Loss/loss', losses2.mean(), episode)
+
                     break
                  
                 # 將轉移儲存到經驗緩衝中
@@ -402,6 +422,10 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
 
             total_reward = 0
             total_loss = 0
+            
+            # tensorbroad 存取輸出並結束
+            writer.export_scalars_to_json("./all_scalars.json")
+            writer.close()
 ```
 ---
 ### 製作步驟
