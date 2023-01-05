@@ -34,17 +34,11 @@ from tensorboardX import SummaryWriter
 ```python
 def get_input_shape(Image,Filter,Stride):
     layer1 = math.ceil(((Image - Filter + 1) / Stride))
-    
     o1 = math.ceil((layer1 / Stride))
-    
     layer2 = math.ceil(((o1 - Filter + 1) / Stride))
-    
     o2 = math.ceil((layer2 / Stride))
-    
     layer3 = math.ceil(((o2 - Filter + 1) / Stride))
-    
     o3 = math.ceil((layer3  / Stride))
-
     return int(o3)
 ```
 DRQN演算法：
@@ -52,7 +46,6 @@ DRQN演算法：
 class DRQN():
     def __init__(self, input_shape, num_actions, inital_learning_rate):
         # 初始化所有超參數
-
         self.tfcast_type = tf.float32
         
         # 設定輸入外形為(length, width, channels)
@@ -112,7 +105,6 @@ class DRQN():
         self.features2 = tf.Variable(initial_value = np.random.rand(self.filter_size, self.filter_size, self.num_filters[0], self.num_filters[1]),
                                      dtype = self.tfcast_type)
                                      
-        
         self.features3 = tf.Variable(initial_value = np.random.rand(self.filter_size, self.filter_size, self.num_filters[1], self.num_filters[2]),
                                      dtype = self.tfcast_type)
         # 初始化RNN變數
@@ -221,7 +213,6 @@ class ExperienceReplay():
         
     # 如果緩衝滿了就移除舊的轉移
     # 可把緩衝視佇列，新的進來時，舊的就出去
-    
     def appendToBuffer(self, memory_tuplet):
         if len(self.buffer) > self.buffer_size: 
             for i in range(len(self.buffer) - self.buffer_size):
@@ -229,7 +220,6 @@ class ExperienceReplay():
         self.buffer.append(memory_tuplet)  
         
     # 定義 sample 函式來隨機取樣n個轉移  
-    
     def sample(self, n):
         memories = []
         for i in range(n):
@@ -287,7 +277,7 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
     game.set_render_corpses(False)
     game.set_render_screen_flashes(True)
 
-    # 指定代理可用的按鈕
+    # 指定代理可用的按鈕，動作選擇向左、向右以及射擊
     # game.add_available_button(viz.Button.TURN_LEFT)
     # game.add_available_button(viz.Button.TURN_RIGHT)
     # game.add_available_button(viz.Button.MOVE_FORWARD)
@@ -318,7 +308,6 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
 
     # 設定 episode_timeout 在數個時間步驟後停止該世代
     # 另外設定 episode_start_time，有助於跳過初始事件
-    
     game.set_episode_timeout(6 * episode_length)
     game.set_episode_start_time(14)
     game.set_window_visible(render)
@@ -363,7 +352,6 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
     with tf.compat.v1.Session() as sess:
         
         # 初始化所有 tensorflow 變數
-        
         sess.run(tf.global_variables_initializer())
         
         for episode in range(num_episodes):
@@ -402,7 +390,6 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
                         writer.add_scalar('Game variables/Ammo', ammo.mean(), episode)
                         writer.add_scalar('Reward Loss/Reward', rewards2.mean(), episode)
                         writer.add_scalar('Reward Loss/loss', losses2.mean(), episode)
-
                     break
                  
                 # 將轉移儲存到經驗緩衝中
@@ -454,8 +441,8 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
 ```
 ---
 ### 製作步驟
-1. 獎勵機制以及懲罰機制
-2. 最後輸出的成果
+1. 
+2. 
 3. 
 4. 
 ---
