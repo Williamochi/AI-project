@@ -23,7 +23,7 @@ tags: [jekyll, ai]
 
 ### 演算法模型說明 
 DRQN演算法：
-```
+```python
 class DRQN():
     def __init__(self, input_shape, num_actions, inital_learning_rate):
         # 初始化所有超參數
@@ -184,7 +184,7 @@ class DRQN():
                            self.fW, self.fb)
 ```
 定義ExperienceReplay類別來實作經驗回放緩衝，取樣經驗來訓練網路：
-```
+```python
 class ExperienceReplay():
     def __init__(self, buffer_size):
         
@@ -213,7 +213,7 @@ class ExperienceReplay():
         return memories
 ```
 定義用於訓練網路的train函式：
-```
+```python
 def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cfg", map_path = 'map02', render = False):
   
     # 計算Q值的折扣因子
