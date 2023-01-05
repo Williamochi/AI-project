@@ -22,6 +22,31 @@ tags: [jekyll, ai]
 ### 系統方塊圖
 
 ### 演算法模型說明 
+引入所需的函式庫：
+```python
+import tensorflow as tf
+import numpy as np
+import math
+import vizdoom as viz
+from tensorboardX import SummaryWriter
+```
+定義 get_input_shape 函式來計算輸入影像經過卷積層處理後的最後外形：
+```python
+def get_input_shape(Image,Filter,Stride):
+    layer1 = math.ceil(((Image - Filter + 1) / Stride))
+    
+    o1 = math.ceil((layer1 / Stride))
+    
+    layer2 = math.ceil(((o1 - Filter + 1) / Stride))
+    
+    o2 = math.ceil((layer2 / Stride))
+    
+    layer3 = math.ceil(((o2 - Filter + 1) / Stride))
+    
+    o3 = math.ceil((layer3  / Stride))
+
+    return int(o3)
+```
 DRQN演算法：
 ```python
 class DRQN():
