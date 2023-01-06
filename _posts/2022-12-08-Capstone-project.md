@@ -229,7 +229,7 @@ class ExperienceReplay():
 ```
 定義用於訓練網路的train函式：
 ```python
-def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cfg", map_path = 'map02', render = False):
+def train(num_episodes, episode_length, learning_rate, scenario = "basic.wad", map_path = 'map01', render = False):
   
     # 計算Q值的折扣因子
     discount_factor = .99
@@ -428,9 +428,7 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
             rewards.append((episode, total_reward))
             losses.append((episode, total_loss))
 
-            
             print("Episode %d - Reward = %.3f, Loss = %.3f." % (episode, total_reward, total_loss))
-
 
             total_reward = 0
             total_loss = 0
@@ -438,6 +436,10 @@ def train(num_episodes, episode_length, learning_rate, scenario = "deathmatch.cf
             # tensorbroad 存取輸出並結束
             writer.export_scalars_to_json("./all_scalars.json")
             writer.close()
+```
+執行 train 程式來進行訓練
+```python
+train(num_episodes = 500, episode_length = 300, learning_rate = 0.0001, render = True)
 ```
 ---
 ### 製作步驟
