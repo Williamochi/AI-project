@@ -376,7 +376,7 @@ def train(num_episodes, episode_length, learning_rate, scenario = "basic.wad", m
                 # 更新總獎勵
                 total_reward += reward
 
-                # 如過世代結束則中斷迴圈
+                # 如果世代結束則中斷迴圈
                 if game.is_episode_finished():
                     
                     # tensordroad紀錄輸出
