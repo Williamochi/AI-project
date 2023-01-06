@@ -424,7 +424,7 @@ def train(num_episodes, episode_length, learning_rate, scenario = "basic.wad", m
                     # 更新兩個網路
                     actionDRQN.update.run(feed_dict = {actionDRQN.target_vector: Qtarget, actionDRQN.input: mem_frame})
                     targetDRQN.update.run(feed_dict = {targetDRQN.target_vector: Qtarget, targetDRQN.input: mem_frame})
-
+            # 存取總獎勵及總損失
             rewards.append((episode, total_reward))
             losses.append((episode, total_loss))
 
