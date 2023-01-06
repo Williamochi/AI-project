@@ -330,7 +330,7 @@ def train(num_episodes, episode_length, learning_rate, scenario = "basic.wad", m
     actionDRQN = DRQN((160, 256, 3), game.get_available_buttons_size() - 2, learning_rate)
     targetDRQN = DRQN((160, 256, 3), game.get_available_buttons_size() - 2, learning_rate)
     
-    # 建立一個 ExperienceReplay 類別的實例class，緩衝大小為 1000
+    # 建立一個 ExperienceReplay 類別，緩衝大小為 1000
     experiences = ExperienceReplay(1000)
 
     # 儲存模型
