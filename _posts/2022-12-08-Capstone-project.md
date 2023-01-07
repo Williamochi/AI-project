@@ -127,12 +127,12 @@ $$
 
 其詳細步驟為：
 
-![Q-Learning](/graph/q_learning.jpg){: w="350" h="700" .center}_Q-Learning 流程圖_
+[Q-Learning](/graph/q_learning.jpg){: w="350" h="700" .center}_Q-Learning 流程圖_
 
 ### *Deep-Q-Network*
 簡單的架構圖如下：
 
-![DQN_frame](/graph/DQN_frame.png){: w="350" h="700" .center}_DQN_frame_
+[DQN_frame](/graph/DQN_frame.png){: w="350" h="700" .center}_DQN_frame_
 
 
 ### *DQN-algorithm*
@@ -140,7 +140,7 @@ Paper：[Playing Atari with Deep Reinforcement Learning](https://arxiv.org/abs/1
 
 Frame&Words discription：
 
-![DQN_algorithm_word](/graph/DQN_algorithm_word.png){: w="350" h="700" .left}![DQN_algorithm](/graph/DQN_algorithm.png){: w="350" h="700" .left}_DQN_algorithm_words(left)&DQN_algorithm(right)_
+[DQN_algorithm_word](/graph/DQN_algorithm_word.png){: w="350" h="700" .left}![DQN_algorithm](/graph/DQN_algorithm.png){: w="350" h="700" .left}_DQN_algorithm_words(left)&DQN_algorithm(right)_
 
 左邊紅色線為初始狀態的第一步，將 St, at, rt, S(t+1)給算出來並存放至記憶體裡面，第一步初始化做完之後，再進行藍色線的flow，通過環境來儲存St, at, rt, S(t+1)，並將參數丟給對應的網路來計算LOSS Function，最後再更新網路的參數，一直不斷的重覆更新就可以找出最好的Q Function。
 
@@ -176,25 +176,25 @@ LSTM層會保留關於前一個遊戲狀態的重要資訊，並根據我們的�
 
 詳細架構如下：
 
-![DRQN_frame](/graph/DRQN_frame.png){: w="350" h="700" .center}_DRQN_frame_
+[DRQN_frame](/graph/DRQN_frame.png){: w="350" h="700" .center}_DRQN_frame_
 
 ### *DoubleDQN*
 
 DoubleDQN的原始演算法為：[Double Q-learning” (Hasselt, 2010)](https://arxiv.org/pdf/1509.06461.pdf)
 
-![DoubleQ-learning](/graph/DRQN_frame.png){: w="350" h="700" .center}_DoubleQ-learning_
+[DoubleQ-learning](/graph/DRQN_frame.png){: w="350" h="700" .center}_DoubleQ-learning_
 
 進階版的DoubleDQN：[Deep Reinforcement Learning with Double Q-learning” (Hasselt et al., 2015)](https://arxiv.org/pdf/1509.06461.pdf)
 
 顧名思義就是運用兩個Q函數、 各自獨立學習 。 一個函數是用來選擇動作 · 而另一個 Q 函數則是用來評估動作，可以解決估計Q值時因為雜訊，導致某個動作的評價變高，影響結果。詳細的演算法如下圖：
 
-![DoubleDQN](/graph/DoubleDQN.jpg){: w="350" h="700" .center}_DoubleDQN_
+[DoubleDQN](/graph/DoubleDQN.jpg){: w="350" h="700" .center}_DoubleDQN_
 
 ### DuelingDQN
 
 定義為Q函數價值函數兩者之差，代表相較於其他動作，代理執行動作$a$的良好程度，其架構如下：
 
-![DuelingDQN_frame](/graph/DuelingDQN_frame.jpg){: w="350" h="700" .center}_DuelingDQN_frame_
+[DuelingDQN_frame](/graph/DuelingDQN_frame.jpg){: w="350" h="700" .center}_DuelingDQN_frame_
 
 (以下內容擷取自書中)
 
@@ -214,11 +214,11 @@ DoubleDQN的原始演算法為：[Double Q-learning” (Hasselt, 2010)](https://
 ### *系統方塊圖*
 **TRAIN**
 
-![Train](/graph/train_flow.png){: w="350" h="700" .center}
+[Train](/graph/train_flow.png){: w="350" h="700" .center}
 
 **DRQN**
 
-![DRQN](/graph/DRQN_flow.png){: w="350" h="700" .center}
+[DRQN](/graph/DRQN_flow.png){: w="350" h="700" .center}
 
 ### *演算法模型說明*
 #### [DRQN演算法與程式碼](https://github.com/Williamochi/AI-project/blob/gh-pages/DRQN_programming)
@@ -656,13 +656,13 @@ DDDQN全名為Double Dueling Deep Q-Learning Network，是兩個演算法的結�
 
 #### DRQN V.S. DDDQN(趨勢圖)
 
-![DRQN_linechart_1](/graph/DRQN_linechart_1.png){: w="350" h="700" .center}
+[DRQN_linechart_1](/graph/DRQN_linechart_1.png){: w="350" h="700" .center}
 
-![DRQN_linechart_2](/graph/DRQN_linechart_2.png){: w="350" h="700" .center}_DRQN-linechart_
+[DRQN_linechart_2](/graph/DRQN_linechart_2.png){: w="350" h="700" .center}_DRQN-linechart_
 
-![DDDQN_linechart_1](/graph/DDDQN_linechart_1.png){: w="350" h="700" .center}
+[DDDQN_linechart_1](/graph/DDDQN_linechart_1.png){: w="350" h="700" .center}
 
-![DDDQN_linechart_2](/graph/DDDQN_linechart_2.png){: w="350" h="700" .center}_DDDQN-linechart_
+[DDDQN_linechart_2](/graph/DDDQN_linechart_2.png){: w="350" h="700" .center}_DDDQN-linechart_
 
 根據DDDQN的趨勢圖所顯示，彈藥使用量以及獎勵皆有上升趨勢，以及損失有下降趨勢，代表此演算法有助於訓練此遊戲。
 
@@ -672,7 +672,7 @@ DRQN的趨勢圖在彈藥的使用量及獎勵皆有上升趨勢，但損失趨�
 
 #### DRQN程式運行圖片
 
-![DRQNgame_termianl](/graph/DRQNgame_termianl.png){: w="350" h="700" .center}_DRQN_
+[DRQNgame_termianl](/graph/DRQNgame_termianl.png){: w="350" h="700" .center}_DRQN_
 
 #### DDDQN程式運行圖片
 
