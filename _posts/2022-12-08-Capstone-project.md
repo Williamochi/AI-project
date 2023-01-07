@@ -31,8 +31,8 @@ img_path:
 
 ---
 ### *策略函數*
-根據目前狀態，決定執行的動作，說明在各狀態中應該要執行的動作，通常表示為`\pi(s):S \rightarrow A`以下介紹三種策略：
-1. Stochastic Polic: $a \sim \pi (a\mid s)=P(a \mid s)，s \in S $
+根據目前狀態，決定執行的動作，說明在各狀態中應該要執行的動作，通常表示為$\pi(s):S \rightarrow A$以下介紹三種策略：
+1. Stochastic Polic: $a \sim \pi (a\mid s)=P(a \mid s)，s \in S$ 
 2. Deterministic Policy: $a = \pi(s)$(ex: greedy )
 3. Random Policy: $a = rand(A)$ ，行為的選擇是隨機的(ex: $\epsilon-greedy$ )
 
@@ -90,7 +90,7 @@ $$\cal{R}^a_{ss'}=\Bbb{E}(\it{R_{t+\rm{1}}}) \mid s_t = s,s_{t+1}=s', a_t=a)$$
 我們可以用價值迭代或是策略迭代來解Bellman Function，以下是步驟流程圖(擷取自書中)<br>
 
 ![策略迭代](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/policy_itter.jpg?raw=true)
-![價值迭代](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/policy_itter.jpg?raw=true)_策略迭代(左)價值迭代(右)_
+![價值迭代](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/policy_itter.jpg?raw=true)_策略迭代(上)價值迭代(下)_
 
 
 動態學習必須在轉移機率與獎勵機率已知得前提下運作，因此當我們無法得知環境的模型時，就可以使用MC演算法;當不具備環境知識時，它非常適合用來搜尋最佳策略。
