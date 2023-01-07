@@ -89,7 +89,7 @@ $$\cal{R}^a_{ss'}=\Bbb{E}(\it{R_{t+\rm{1}}}) \mid s_t = s,s_{t+1}=s', a_t=a)$$
 動態規劃是一種用於處理複雜問題的技巧。將問題拆成比較簡單的子問題，並計算每個子問題的解決方案。如果發生同樣的子問題，將不會重新計算，直接採納既有方案，降低運算時間。<br>
 我們可以用價值迭代或是策略迭代來解Bellman Function，以下是步驟流程圖(擷取自書中)<br>
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/policy_itter.jpg" width="500" height="700"><img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/policy_itter.jpg" width="500" height="700">_策略迭代(左)價值迭代(右)_
+![策略迭代]("https://github.com/Williamochi/AI-project/blob/gh-pages/graph/policy_itter.jpg"?raw=true)![價值迭代]("https://github.com/Williamochi/AI-project/blob/gh-pages/graph/policy_itter.jpg"?raw=true)_策略迭代(左)價值迭代(右)_
 
 
 動態學習必須在轉移機率與獎勵機率已知得前提下運作，因此當我們無法得知環境的模型時，就可以使用MC演算法;當不具備環境知識時，它非常適合用來搜尋最佳策略。
@@ -128,19 +128,20 @@ $$
 
 其詳細步驟為：
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/q_learning.jpg" width="500" height="700">_Q-Learning 流程圖_
+![Q-Learning](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/q_learning.jpg?raw=true)_Q-Learning 流程圖_
 
 ### *Deep-Q-Network*
 簡單的架構圖如下：
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DQN_frame.png" width="500" height="700">_DQN_frame_
+![DQN_frame](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DQN_frame.png?raw=true)_DQN_frame_
 
 ### *DQN-algorithm*
 Paper：[Playing Atari with Deep Reinforcement Learning](https://arxiv.org/abs/1312.5602)
 
 Frame&Words discription：
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DQN_algorithm_word.png" width="500" height="700"><img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DQN_algorithm.png" width="500" height="700">_DQN_algorithm_words(left)&DQN_algorithm(right)_
+![DQN_algorithm_word](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DQN_algorithm_word.png?raw=true)
+![DQN_algorithm](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DQN_algorithm.png?raw=true)_DQN_algorithm_words(left)&DQN_algorithm(right)_
 
 左邊紅色線為初始狀態的第一步，將 $S_t, a_t, r_t, S_{t+1}$ 給算出來並存放至記憶體裡面，第一步初始化做完之後，再進行藍色線的flow，通過環境來儲存 $S_t, a_t, r_t, S_{t+1}$ ，並將參數丟給對應的網路來計算LOSS Function，最後再更新網路的參數，一直不斷的重覆更新就可以找出最好的Q Function。
 
@@ -176,25 +177,25 @@ LSTM層會保留關於前一個遊戲狀態的重要資訊，並根據我們的�
 
 詳細架構如下：
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DRQN_frame.png" width="500" height="700">_DRQN_frame_
+![DRQN_frame](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DRQN_frame.png?raw=true)_DRQN_frame_
 
 ### *DoubleDQN*
 
 DoubleDQN的原始演算法為：[Double Q-learning” (Hasselt, 2010)](https://arxiv.org/pdf/1509.06461.pdf)
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DoubleQ-learning.jpg" width="500" height="700">_DoubleQ-learning_
+![DoubleQ-learning](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DoubleQ-learning.jpg?raw=true)_DoubleQ-learning_
 
 進階版的DoubleDQN：[Deep Reinforcement Learning with Double Q-learning” (Hasselt et al., 2015)](https://arxiv.org/pdf/1509.06461.pdf)
 
 顧名思義就是運用兩個Q函數、各自獨立學習。一個函數是用來選擇動作，而另一個 Q 函數則是用來評估動作，可以解決估計Q值時因為雜訊，導致某個動作的評價變高，影響結果。詳細的演算法如下圖：
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DoubleDQN.jpg" width="500" height="700">_DoubleDQN_
+![DoubleDQN](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DoubleDQN.jpg?raw=true)_DoubleDQN_
 
 ### DuelingDQN
 
 定義為Q函數價值函數兩者之差，代表相較於其他動作，代理執行動作$a$的良好程度，其架構如下：
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DuelingDQN_frame.jpg" width="500" height="700">_DuelingDQN_frame_
+![DuelingDQN_frame](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DuelingDQN_frame.jpg?raw=true)_DuelingDQN_frame_
 
 (以下內容擷取自書中)
 
@@ -214,11 +215,11 @@ DoubleDQN的原始演算法為：[Double Q-learning” (Hasselt, 2010)](https://
 ### *系統方塊圖*
 **TRAIN**
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/train_flow.png" width="500" height="700">
+![Train](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/train_flow.png?raw=true)
 
 **DRQN**
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DRQN_flow.png" width="500" height="700">
+![DRQN](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DRQN_flow.png?raw=true)
 
 ### *演算法模型說明*
 #### [DRQN演算法與程式碼](https://github.com/Williamochi/AI-project/blob/gh-pages/DRQN_programming)
@@ -656,13 +657,13 @@ DDDQN全名為Double Dueling Deep Q-Learning Network，是兩個演算法的結�
 
 #### DRQN V.S. DDDQN(趨勢圖)
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DRQN_linechart_1.png" width="500" height="700">
+![DRQN_linechart_1](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DRQN_linechart_1.png?raw=true)
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DRQN_linechart_2.png" width="500" height="700">_DRQN-linechart_
+![DRQN_linechart_2](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DRQN_linechart_2.png?raw=true)_DRQN-linechart_
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DDDQN_linechart_1.png" width="500" height="700">
+![DDDQN_linechart_1](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DDDQN_linechart_1.png?raw=true)
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DDDQN_linechart_2.png" width="500" height="700">_DDDQN-linechart_
+![DDDQN_linechart_2](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DDDQN_linechart_2.png?raw=true)_DDDQN-linechart_
 
 根據DDDQN的趨勢圖所顯示，彈藥使用量以及獎勵皆有上升趨勢，以及損失有下降趨勢，代表此演算法有助於訓練此遊戲。
 
@@ -672,11 +673,11 @@ DRQN的趨勢圖在彈藥的使用量及獎勵皆有上升趨勢，但損失趨�
 
 #### DRQN程式運行圖片
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DRQNgame_termianl.png" width="500" height="700">_DRQN_
+![DRQNgame_termianl](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DRQNgame_termianl.png?raw=true)_DRQN_
 
 #### DDDQN程式運行圖片
 
-<img src="https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DDDQNgame_termianl.png" width="500" height="700">_DDDQN_
+![DDDQNgame_termianl](https://github.com/Williamochi/AI-project/blob/gh-pages/graph/DDDQNgame_termianl.png?raw=true)_DDDQN_
 
 #### 程式運行影片
 [運用DRQN演算法遊玩遊戲實作影片](https://youtu.be/28RMXN0h_5o)
