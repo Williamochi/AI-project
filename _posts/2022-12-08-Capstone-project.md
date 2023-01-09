@@ -5,7 +5,6 @@ authors: [<鄭丞恩>,<李承恩>,<丁昱鈞>]
 category: [AI]
 tags: [jekyll, ai, reinforce_learning]
 math: true
-img_path: 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
     tex2jax: {
